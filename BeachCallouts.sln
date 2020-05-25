@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeachCallouts", "BeachCallouts\BeachCallouts.csproj", "{F182487D-FB9E-419F-89AA-E103C883DE7F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F182487D-FB9E-419F-89AA-E103C883DE7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F182487D-FB9E-419F-89AA-E103C883DE7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F182487D-FB9E-419F-89AA-E103C883DE7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F182487D-FB9E-419F-89AA-E103C883DE7F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
