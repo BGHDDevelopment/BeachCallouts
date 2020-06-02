@@ -8,7 +8,7 @@ using CitizenFX.Core.Native;
 namespace BeachCallouts
 {
     
-    [CalloutProperties("Robbery", "BGHDDevelopment", "0.0.1", Probability.High)]
+    [CalloutProperties("Robbery", "BGHDDevelopment", "0.0.2", Probability.High)]
     public class Robbery : Callout
     {
         private Ped vic, suspect;

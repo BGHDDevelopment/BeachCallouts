@@ -9,7 +9,7 @@ using CitizenFX.Core.Native;
 namespace BeachCallouts
 {
     
-    [CalloutProperties("Boat Ashore", "BGHDDevelopment", "0.0.1", Probability.High)]
+    [CalloutProperties("Boat Ashore", "BGHDDevelopment", "0.0.2", Probability.High)]
     public class BoatOnShore : Callout
     {
         private Vehicle car;

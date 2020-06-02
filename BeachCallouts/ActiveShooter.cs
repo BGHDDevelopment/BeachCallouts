@@ -9,7 +9,7 @@ using CitizenFX.Core.Native;
 namespace BeachCallouts
 {
     
-    [CalloutProperties("Active Shooter", "BGHDDevelopment", "0.0.1", Probability.Low)]
+    [CalloutProperties("Active Shooter", "BGHDDevelopment", "0.0.2", Probability.Low)]
     public class ActiveShooter : Callout
     {
         private Ped suspect, vic1, vic2, vic3, vic4, vic5;
@@ -26,7 +26,8 @@ namespace BeachCallouts
         {
             base.OnStart(player);
             suspect.AttachBlip();
-            suspect.Weapons.Give(WeaponHash.AssaultRifle, 1000, true, true);
+            suspect.Weapons.Give(WeaponHash.MarksmanRifle, 1000, true, true);
+            suspect.Task.ShootAt(player);
             vic1.Kill();
             vic2.Kill();
             vic3.Kill();
@@ -40,7 +41,6 @@ namespace BeachCallouts
             dynamic data1 = await GetPedData(suspect.NetworkId);
             string firstname = data1.Firstname;
             DrawSubtitle("~r~[" + firstname + "] ~s~I knew this was coming... DIE!", 5000);
-            suspect.Task.ShootAt(player);
         }
 
         public async override Task Init()

@@ -8,7 +8,7 @@ using CitizenFX.Core.Native;
 
 namespace BeachCallouts
 {
-    [CalloutProperties("Possible Fight", "BGHDDevelopment", "0.0.1", Probability.Medium)]
+    [CalloutProperties("Possible Fight", "BGHDDevelopment", "0.0.2", Probability.Medium)]
     public class Fight : Callout
     {
         Ped suspect, suspect2, suspect3, suspect4, suspect5, suspect6, suspect7, suspect8, suspect9, suspect10;

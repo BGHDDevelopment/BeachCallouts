@@ -9,7 +9,7 @@ using CitizenFX.Core.Native;
 namespace BeachCallouts
 {
     
-    [CalloutProperties("Fireworks", "BGHDDevelopment", "0.0.1", Probability.High)]
+    [CalloutProperties("Fireworks", "BGHDDevelopment", "0.0.2", Probability.High)]
     public class Fireworks : Callout
     {
 
@@ -156,11 +156,11 @@ namespace BeachCallouts
             suspect2 = await SpawnPed(GetRandomPed(), Location + 2);
             suspect3 = await SpawnPed(GetRandomPed(), Location + 3);
             suspect4 = await SpawnPed(GetRandomPed(), Location - 1);
-            suspect5 = await SpawnPed(GetRandomPed(), Location - 2);
-            suspect6 = await SpawnPed(GetRandomPed(), Location - 3);
-            suspect7 = await SpawnPed(GetRandomPed(), Location + 4);
-            suspect8 = await SpawnPed(GetRandomPed(), Location + 5);
-            suspect9 = await SpawnPed(GetRandomPed(), Location - 4);
+            suspect5 = await SpawnPed(GetRandomPed(), Location - 5);
+            suspect6 = await SpawnPed(GetRandomPed(), Location - 6);
+            suspect7 = await SpawnPed(GetRandomPed(), Location + 7);
+            suspect8 = await SpawnPed(GetRandomPed(), Location + 4);
+            suspect9 = await SpawnPed(GetRandomPed(), Location - 2);
             suspect10 = await SpawnPed(GetRandomPed(), Location - 5);
             suspect1.Weapons.Give(WeaponHash.Firework, 130, true, true);
             suspect2.Weapons.Give(WeaponHash.Firework, 130, true, true);

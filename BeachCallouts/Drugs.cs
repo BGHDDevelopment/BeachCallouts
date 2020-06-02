@@ -10,7 +10,7 @@ using CitizenFX.Core.Native;
 namespace BeachCallouts
 {
     
-    [CalloutProperties("Drug Deal", "BGHDDevelopment", "0.0.1", Probability.Medium)]
+    [CalloutProperties("Drug Deal", "BGHDDevelopment", "0.0.2", Probability.Medium)]
     public class Drugs : Callout
     {
         private Ped suspect, suspect2;
