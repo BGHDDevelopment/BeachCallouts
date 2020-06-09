@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Threading.Tasks;
-using CalloutAPI;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
+using FivePD.API;
 
 namespace BeachCallouts
 {
-    [CalloutProperties("Drunk Person", "BGHDDevelopment", "0.0.2", Probability.High)]
+    [CalloutProperties("Drunk Person", "BGHDDevelopment", "0.0.3", Probability.High)]
     public class DrunkCallout : Callout
     {
         private Ped suspect, suspect2;

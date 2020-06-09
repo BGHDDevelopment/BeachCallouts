@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
-using System.Security.Permissions;
 using System.Threading.Tasks;
-using CalloutAPI;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
+using FivePD.API;
 
 namespace BeachCallouts
 {
     
-    [CalloutProperties("Drug Deal", "BGHDDevelopment", "0.0.2", Probability.Medium)]
+    [CalloutProperties("Drug Deal", "BGHDDevelopment", "0.0.3", Probability.Medium)]
     public class Drugs : Callout
     {
         private Ped suspect, suspect2;

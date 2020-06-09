@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Threading.Tasks;
-using CalloutAPI;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
+using FivePD.API;
 
 namespace BeachCallouts
 {
-    [CalloutProperties("Possible Fight", "BGHDDevelopment", "0.0.2", Probability.Medium)]
+    [CalloutProperties("Possible Fight", "BGHDDevelopment", "0.0.3", Probability.Medium)]
     public class Fight : Callout
     {
         Ped suspect, suspect2, suspect3, suspect4, suspect5, suspect6, suspect7, suspect8, suspect9, suspect10;

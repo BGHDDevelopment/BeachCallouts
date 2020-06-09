@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
-using System.Configuration;
 using System.Dynamic;
 using System.Threading.Tasks;
-using CalloutAPI;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
+using FivePD.API;
 
 namespace BeachCallouts
 {
     
-    [CalloutProperties("Active Shooter", "BGHDDevelopment", "0.0.2", Probability.Low)]
+    [CalloutProperties("Active Shooter", "BGHDDevelopment", "0.0.3", Probability.Low)]
     public class ActiveShooter : Callout
     {
         private Ped suspect, vic1, vic2, vic3, vic4, vic5;
