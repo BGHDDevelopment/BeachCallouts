@@ -9,7 +9,7 @@ using FivePD.API;
 namespace BeachCallouts
 {
     
-    [CalloutProperties("Drug Deal", "BGHDDevelopment", "0.0.3", Probability.Medium)]
+    [CalloutProperties("Drug Deal", "BGHDDevelopment", "0.0.3")]
     public class Drugs : Callout
     {
         private Ped suspect, suspect2;
@@ -22,20 +22,21 @@ namespace BeachCallouts
             int x = random.Next(1, 100 + 1);
             if(x <= 40)
             { 
-                InitBase(new Vector3(-1591.88f, -927.26f, 8.98211f));
+                InitInfo(new Vector3(-1591.88f, -927.26f, 8.98211f));
             }
             else if(x > 40 && x <= 65)
             {
-                InitBase(new Vector3(-1224.92f, -1803.93f, 2.36156f));
+                InitInfo(new Vector3(-1224.92f, -1803.93f, 2.36156f));
             }
             else
             {
-                InitBase(new Vector3(-1579.6f, -1021.78f, 7.64913f));
+                InitInfo(new Vector3(-1579.6f, -1021.78f, 7.64913f));
             }
             ShortName = "Drug Deal";
             CalloutDescription = "A person has been seen selling drugs.";
             ResponseCode = 2;
             StartDistance = 200f;
+            UpdateData();
         }
         
         public async override void OnStart(Ped player)
@@ -43,7 +44,7 @@ namespace BeachCallouts
             base.OnStart(player);
             suspect.AttachBlip();
             suspect2.AttachBlip();
-            dynamic data1 = await GetPedData(suspect.NetworkId);
+            dynamic data1 = await Utilities.GetPedData(suspect.NetworkId);
             string firstname = data1.Firstname;
             Random random = new Random();
             int x = random.Next(1, 100 + 1);
@@ -67,9 +68,9 @@ namespace BeachCallouts
             }
         }
 
-        public async override Task Init()
+        public async override Task OnAccept()
         {
-            OnAccept();
+            InitBlip();
             suspect = await SpawnPed(GetRandomPed(), Location);
             suspect2 = await SpawnPed(GetRandomPed(), Location);
             //Suspect Data
@@ -81,7 +82,7 @@ namespace BeachCallouts
             };
             items.Add(DrugBags);
             data.items = items;
-            SetPedData(suspect.NetworkId,data);
+            Utilities.SetPedData(suspect.NetworkId,data);
 
             //Suspect2 Data
             dynamic data2 = new ExpandoObject();
@@ -92,14 +93,14 @@ namespace BeachCallouts
             };
             items.Add(Drugs);
             data.items2 = items2;
-            SetPedData(suspect2.NetworkId,data2);
+            Utilities.SetPedData(suspect2.NetworkId,data2);
             
             //Tasks
             suspect.AlwaysKeepTask = true;
             suspect.BlockPermanentEvents = true;
             suspect2.AlwaysKeepTask = true;
             suspect2.BlockPermanentEvents = true;
-            dynamic playerData = GetPlayerData();
+            dynamic playerData = Utilities.GetPlayerData();
             string displayName = playerData.DisplayName;
             Notify("~r~[BeachCallouts] ~y~Officer ~b~" + displayName + ",~y~ the suspects have been reported to have");
             Notify("~y~been exchanging baggies!");

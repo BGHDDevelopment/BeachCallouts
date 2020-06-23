@@ -9,7 +9,7 @@ using FivePD.API;
 namespace BeachCallouts
 {
     
-    [CalloutProperties("Boat Ashore", "BGHDDevelopment", "0.0.3", Probability.High)]
+    [CalloutProperties("Boat Ashore", "BGHDDevelopment", "0.0.3")]
     public class BoatOnShore : Callout
     {
         private Vehicle car;
@@ -24,20 +24,21 @@ namespace BeachCallouts
             int x = random.Next(1, 100 + 1);
             if(x <= 40)
             { 
-                InitBase(new Vector3(-1576.69f, -1221.67f, 1.46055f));
+                InitInfo(new Vector3(-1576.69f, -1221.67f, 1.46055f));
             }
             else if(x > 40 && x <= 65)
             {
-                InitBase(new Vector3(-1435.31f, -1554.3f, 1.5076f));
+                InitInfo(new Vector3(-1435.31f, -1554.3f, 1.5076f));
             }
             else
             {
-                InitBase(new Vector3(-1767.66f, -1014.86f, 1.93437f));
+                InitInfo(new Vector3(-1767.66f, -1014.86f, 1.93437f));
             }
             ShortName = "Boat Ashore";
             CalloutDescription = "A boat has run aground.";
             ResponseCode = 2;
             StartDistance = 150f;
+            UpdateData();
         }
         public async override void OnStart(Ped player)
         {
@@ -48,8 +49,8 @@ namespace BeachCallouts
             driver.AttachBlip();
             passenger.AttachBlip();
             API.Wait(6000);
-            dynamic data2 = await GetPedData(passenger.NetworkId);
-            dynamic data1 = await GetPedData(driver.NetworkId);
+            dynamic data2 = await Utilities.GetPedData(passenger.NetworkId);
+            dynamic data1 = await Utilities.GetPedData(driver.NetworkId);
             string firstname2 = data2.Firstname;
             string firstname = data1.Firstname;
             DrawSubtitle("~r~[" + firstname2 + "] ~s~I am sorry I can't be blamed for this!", 5000);
@@ -63,22 +64,22 @@ namespace BeachCallouts
             driver.Task.FleeFrom(player);
         }
 
-        public async override Task Init()
+        public async override Task OnAccept()
         {
-            OnAccept();
+            InitBlip();
             driver = await SpawnPed(GetRandomPed(), Location + 2);
             passenger = await SpawnPed(GetRandomPed(), Location + 1);
             Random random = new Random();
             string cartype = carList[random.Next(carList.Length)];
             VehicleHash Hash = (VehicleHash) API.GetHashKey(cartype);
             car = await SpawnVehicle(Hash, Location);
-            dynamic playerData = GetPlayerData();
+            dynamic playerData = Utilities.GetPlayerData();
             string displayName = playerData.DisplayName;
             Notify("~r~[BeachCallouts] ~y~Officer ~b~" + displayName + ",~y~ a " + cartype + " has washed ashore!");
             //Driver Data
             dynamic data = new ExpandoObject();
             data.alcoholLevel = 0.09;
-            SetPedData(driver.NetworkId,data);
+            Utilities.SetPedData(driver.NetworkId,data);
             
             //Passenger Data
             dynamic data2 = new ExpandoObject();
@@ -89,7 +90,7 @@ namespace BeachCallouts
             };
             items2.Add(Pistol);
             data2.items = items2;
-            SetPedData(passenger.NetworkId,data2);
+            Utilities.SetPedData(passenger.NetworkId,data2);
             //Tasks
             driver.AlwaysKeepTask = true;
             driver.BlockPermanentEvents = true;

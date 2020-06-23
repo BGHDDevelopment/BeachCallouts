@@ -8,7 +8,7 @@ using FivePD.API;
 namespace BeachCallouts
 {
     
-    [CalloutProperties("Robbery", "BGHDDevelopment", "0.0.3", Probability.High)]
+    [CalloutProperties("Robbery", "BGHDDevelopment", "0.0.3")]
     public class Robbery : Callout
     {
         private Ped vic, suspect;
@@ -19,20 +19,21 @@ namespace BeachCallouts
             int x = random.Next(1, 100 + 1);
             if(x <= 40)
             { 
-                InitBase(new Vector3(-1291.22f, -1613.01f, 4.10214f));
+                InitInfo(new Vector3(-1291.22f, -1613.01f, 4.10214f));
             }
             else if(x > 40 && x <= 65)
             {
-                InitBase(new Vector3(-1553.91f, -913.503f, 9.15462f));
+                InitInfo(new Vector3(-1553.91f, -913.503f, 9.15462f));
             }
             else
             {
-                InitBase(new Vector3(-2020.81f, -469.617f, 11.4716f));
+                InitInfo(new Vector3(-2020.81f, -469.617f, 11.4716f));
             }
             ShortName = "Robbery";
             CalloutDescription = "A person is being robbed at the beach.";
             ResponseCode = 3;
             StartDistance = 200f;
+            UpdateData();
         }
         
         public async override void OnStart(Ped player)
@@ -40,9 +41,9 @@ namespace BeachCallouts
             base.OnStart(player);
             vic.AttachBlip();
             suspect.AttachBlip();
-            dynamic data1 = await GetPedData(vic.NetworkId);
+            dynamic data1 = await Utilities.GetPedData(vic.NetworkId);
             string firstname = data1.Firstname;
-            dynamic data2 = await GetPedData(suspect.NetworkId);
+            dynamic data2 = await Utilities.GetPedData(suspect.NetworkId);
             string firstname2 = data2.Firstname;
             Random random = new Random();
             int x = random.Next(1, 100 + 1);
@@ -77,19 +78,19 @@ namespace BeachCallouts
             
         }
 
-        public async override Task Init()
+        public async override Task OnAccept()
         {
-            OnAccept();
+            InitBlip();
             vic = await SpawnPed(GetRandomPed(), Location + 1);
             suspect = await SpawnPed(GetRandomPed(), Location);
             dynamic data = new ExpandoObject();
             data.alcoholLevel = 0.02;
-            SetPedData(vic.NetworkId,data);
+            Utilities.SetPedData(vic.NetworkId,data);
             suspect.AlwaysKeepTask = true;
             suspect.BlockPermanentEvents = true;
             vic.AlwaysKeepTask = true;
             vic.BlockPermanentEvents = true;
-            dynamic playerData = GetPlayerData();
+            dynamic playerData = Utilities.GetPlayerData();
             string displayName = playerData.DisplayName;
             Notify("~r~[BeachCallouts] ~y~Officer ~b~" + displayName + ",~y~ the suspect is armed and dangerous!");
         }

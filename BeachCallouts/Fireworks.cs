@@ -9,7 +9,7 @@ using FivePD.API;
 namespace BeachCallouts
 {
     
-    [CalloutProperties("Fireworks", "BGHDDevelopment", "0.0.3", Probability.High)]
+    [CalloutProperties("Fireworks", "BGHDDevelopment", "0.0.3")]
     public class Fireworks : Callout
     {
 
@@ -22,20 +22,21 @@ namespace BeachCallouts
             int x = random.Next(1, 100 + 1);
             if(x <= 40)
             { 
-                InitBase(new Vector3(-1862.58f, -1215.34f, 13.0176f));
+                InitInfo(new Vector3(-1862.58f, -1215.34f, 13.0176f));
             }
             else if(x > 40 && x <= 65)
             {
-                InitBase(new Vector3(-1821.02f, -865.406f, 3.87857f));
+                InitInfo(new Vector3(-1821.02f, -865.406f, 3.87857f));
             }
             else
             {
-                InitBase(new Vector3(-1219.98f, -1657.79f, 4.18018f));
+                InitInfo(new Vector3(-1219.98f, -1657.79f, 4.18018f));
             }
             ShortName = "Group with Fireworks";
             CalloutDescription = "A group is launching fireworks at the beach.";
             ResponseCode = 2;
             StartDistance = 400f;
+            UpdateData();
         }
         public async override void OnStart(Ped player)
         {
@@ -50,7 +51,7 @@ namespace BeachCallouts
             suspect8.AttachBlip();
             suspect9.AttachBlip();
             suspect10.AttachBlip();
-            dynamic data1 = await GetPedData(suspect1.NetworkId);
+            dynamic data1 = await Utilities.GetPedData(suspect1.NetworkId);
             string firstname = data1.Firstname;
             API.Wait(30000);
             Random random = new Random();
@@ -149,9 +150,9 @@ namespace BeachCallouts
             suspect10.BlockPermanentEvents = true;
         }
 
-        public async override Task Init()
+        public async override Task OnAccept()
         {
-            OnAccept();
+            InitBlip();
             suspect1 = await SpawnPed(GetRandomPed(), Location + 1);
             suspect2 = await SpawnPed(GetRandomPed(), Location + 2);
             suspect3 = await SpawnPed(GetRandomPed(), Location + 3);
@@ -192,7 +193,7 @@ namespace BeachCallouts
             suspect9.BlockPermanentEvents = true;
             suspect10.AlwaysKeepTask = true;
             suspect10.BlockPermanentEvents = true;
-            dynamic playerData = GetPlayerData();
+            dynamic playerData = Utilities.GetPlayerData();
             string displayName = playerData.DisplayName;
             Notify("~r~[BeachCallouts] ~y~Officer ~b~" + displayName + ",~y~ the suspects are firing fireworks into the air!");
             dynamic data = new ExpandoObject();
@@ -204,16 +205,16 @@ namespace BeachCallouts
             };
             items.Add(badItem);
             data.items = items;
-            SetPedData(suspect1.NetworkId,data);
-            SetPedData(suspect2.NetworkId,data);
-            SetPedData(suspect3.NetworkId,data);
-            SetPedData(suspect4.NetworkId,data);
-            SetPedData(suspect5.NetworkId,data);
-            SetPedData(suspect6.NetworkId,data);
-            SetPedData(suspect7.NetworkId,data);
-            SetPedData(suspect8.NetworkId,data);
-            SetPedData(suspect9.NetworkId,data);
-            SetPedData(suspect10.NetworkId,data);
+            Utilities.SetPedData(suspect1.NetworkId,data);
+            Utilities.SetPedData(suspect2.NetworkId,data);
+            Utilities.SetPedData(suspect3.NetworkId,data);
+            Utilities.SetPedData(suspect4.NetworkId,data);
+            Utilities.SetPedData(suspect5.NetworkId,data);
+            Utilities.SetPedData(suspect6.NetworkId,data);
+            Utilities.SetPedData(suspect7.NetworkId,data);
+            Utilities.SetPedData(suspect8.NetworkId,data);
+            Utilities.SetPedData(suspect9.NetworkId,data);
+            Utilities.SetPedData(suspect10.NetworkId,data);
         }
         
         private void Notify(string message)

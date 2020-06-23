@@ -8,18 +8,19 @@ using FivePD.API;
 namespace BeachCallouts
 {
     
-    [CalloutProperties("Active Shooter", "BGHDDevelopment", "0.0.3", Probability.Low)]
+    [CalloutProperties("Active Shooter", "BGHDDevelopment", "0.0.3")]
     public class ActiveShooter : Callout
     {
         private Ped suspect, vic1, vic2, vic3, vic4, vic5;
         List<object> items = new List<object>();
         public ActiveShooter()
         {
-            InitBase(new Vector3(-1688.4f, -1059.91f, 13.0558f));
+            InitInfo(new Vector3(-1688.4f, -1059.91f, 13.0558f));
             ShortName = "Active Shooter";
             CalloutDescription = "Reports of an active shooter at the pier!";
             ResponseCode = 3;
             StartDistance = 300f;
+            UpdateData();
         }
         public async override void OnStart(Ped player)
         {
@@ -37,15 +38,15 @@ namespace BeachCallouts
             vic3.AttachBlip();
             vic4.AttachBlip();
             vic5.AttachBlip();
-            dynamic data1 = await GetPedData(suspect.NetworkId);
+            dynamic data1 = await Utilities.GetPedData(suspect.NetworkId);
             string firstname = data1.Firstname;
             DrawSubtitle("~r~[" + firstname + "] ~s~I knew this was coming... DIE!", 5000);
         }
 
-        public async override Task Init()
+        public async override Task OnAccept()
         {
-            OnAccept();
-            dynamic playerData = GetPlayerData();
+            InitBlip();
+            dynamic playerData = Utilities.GetPlayerData();
             string displayName = playerData.DisplayName;
             Notify("~r~[BeachCallouts] ~y~Officer ~b~" + displayName + ",~y~ reports show multiple victims down!");
             suspect = await SpawnPed(GetRandomPed(), Location);
@@ -63,7 +64,7 @@ namespace BeachCallouts
             };
             items.Add(Rifle);
             data.items = items;
-            SetPedData(suspect.NetworkId,data);
+            Utilities.SetPedData(suspect.NetworkId,data);
             suspect.AlwaysKeepTask = true;
             suspect.BlockPermanentEvents = true;
         }
