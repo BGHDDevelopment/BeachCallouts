@@ -34,7 +34,6 @@ namespace BeachCallouts
             CalloutDescription = "A fight is taking place.";
             ResponseCode = 3;
             StartDistance = 200f;
-            UpdateData();
         }
 
         public async override void OnStart(Ped player)
@@ -81,6 +80,7 @@ namespace BeachCallouts
         public async override Task OnAccept()
         {
             InitBlip();
+            UpdateData();
             suspect = await SpawnPed(GetRandomPed(), Location + 1);
             suspect2 = await SpawnPed(GetRandomPed(), Location - 1);
             suspect3 = await SpawnPed(GetRandomPed(), Location + 2);

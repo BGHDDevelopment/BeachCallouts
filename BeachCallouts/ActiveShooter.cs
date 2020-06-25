@@ -20,7 +20,6 @@ namespace BeachCallouts
             CalloutDescription = "Reports of an active shooter at the pier!";
             ResponseCode = 3;
             StartDistance = 300f;
-            UpdateData();
         }
         public async override void OnStart(Ped player)
         {
@@ -46,6 +45,7 @@ namespace BeachCallouts
         public async override Task OnAccept()
         {
             InitBlip();
+            UpdateData();
             dynamic playerData = Utilities.GetPlayerData();
             string displayName = playerData.DisplayName;
             Notify("~r~[BeachCallouts] ~y~Officer ~b~" + displayName + ",~y~ reports show multiple victims down!");

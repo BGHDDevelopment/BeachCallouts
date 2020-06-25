@@ -36,7 +36,6 @@ namespace BeachCallouts
             CalloutDescription = "A group is launching fireworks at the beach.";
             ResponseCode = 2;
             StartDistance = 400f;
-            UpdateData();
         }
         public async override void OnStart(Ped player)
         {
@@ -153,6 +152,7 @@ namespace BeachCallouts
         public async override Task OnAccept()
         {
             InitBlip();
+            UpdateData();
             suspect1 = await SpawnPed(GetRandomPed(), Location + 1);
             suspect2 = await SpawnPed(GetRandomPed(), Location + 2);
             suspect3 = await SpawnPed(GetRandomPed(), Location + 3);

@@ -35,7 +35,6 @@ namespace BeachCallouts
             CalloutDescription = "A drunk person is causing issues at the beach.";
             ResponseCode = 2;
             StartDistance = 200f;
-            UpdateData();
         }
         
         public async override void OnStart(Ped player)
@@ -59,6 +58,7 @@ namespace BeachCallouts
         public async override Task OnAccept()
         {
             InitBlip();
+            UpdateData();
             suspect = await SpawnPed(GetRandomPed(), Location);
             suspect2 = await SpawnPed(GetRandomPed(), Location);
             //Suspect Data

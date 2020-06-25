@@ -38,7 +38,6 @@ namespace BeachCallouts
             CalloutDescription = "A boat has run aground.";
             ResponseCode = 2;
             StartDistance = 150f;
-            UpdateData();
         }
         public async override void OnStart(Ped player)
         {
@@ -67,6 +66,7 @@ namespace BeachCallouts
         public async override Task OnAccept()
         {
             InitBlip();
+            UpdateData();
             driver = await SpawnPed(GetRandomPed(), Location + 2);
             passenger = await SpawnPed(GetRandomPed(), Location + 1);
             Random random = new Random();

@@ -33,7 +33,6 @@ namespace BeachCallouts
             CalloutDescription = "A person is being robbed at the beach.";
             ResponseCode = 3;
             StartDistance = 200f;
-            UpdateData();
         }
         
         public async override void OnStart(Ped player)
@@ -81,6 +80,7 @@ namespace BeachCallouts
         public async override Task OnAccept()
         {
             InitBlip();
+            UpdateData();
             vic = await SpawnPed(GetRandomPed(), Location + 1);
             suspect = await SpawnPed(GetRandomPed(), Location);
             dynamic data = new ExpandoObject();
