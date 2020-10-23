@@ -5,17 +5,16 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using FivePD.API;
+using FivePD.API.Utils;
 
 namespace BeachCallouts
 {
     
-    [CalloutProperties("Boat Ashore", "BGHDDevelopment", "0.0.3")]
+    [CalloutProperties("Boat Ashore", "BGHDDevelopment", "0.0.4")]
     public class BoatOnShore : Callout
     {
         private Vehicle car;
         Ped driver, passenger;
-        List<object> items = new List<object>();
-        List<object> items2 = new List<object>();
         private string[] carList = { "tug", "Dinghy", "Jetmax", "Speeder", "Speeder2", "Squalo", "Submersible", "Submersible2", "Suntrap", "Toro", "Tropic", "Tropic2"};
 
         public BoatOnShore()
@@ -48,12 +47,11 @@ namespace BeachCallouts
             driver.AttachBlip();
             passenger.AttachBlip();
             API.Wait(6000);
-            dynamic data2 = await Utilities.GetPedData(passenger.NetworkId);
-            dynamic data1 = await Utilities.GetPedData(driver.NetworkId);
-            string firstname2 = data2.Firstname;
-            string firstname = data1.Firstname;
+            PedData data2 = await Utilities.GetPedData(passenger.NetworkId);
+            PedData data1 = await Utilities.GetPedData(driver.NetworkId);
+            string firstname2 = data2.FirstName;
+            string firstname = data1.FirstName;
             DrawSubtitle("~r~[" + firstname2 + "] ~s~I am sorry I can't be blamed for this!", 5000);
-            //API.ExplodePedHead(passenger.GetHashCode(), 0x1B06D57);
             passenger.Kill();
             API.Wait(2000);
             DrawSubtitle("~r~[" + firstname + "] ~s~NO WHY WOULD YOU DO THAT!", 5000);
@@ -67,29 +65,32 @@ namespace BeachCallouts
         {
             InitBlip();
             UpdateData();
-            driver = await SpawnPed(GetRandomPed(), Location + 2);
-            passenger = await SpawnPed(GetRandomPed(), Location + 1);
+            driver = await SpawnPed(RandomUtils.GetRandomPed(), Location + 2);
+            passenger = await SpawnPed(RandomUtils.GetRandomPed(), Location + 1);
             Random random = new Random();
             string cartype = carList[random.Next(carList.Length)];
             VehicleHash Hash = (VehicleHash) API.GetHashKey(cartype);
             car = await SpawnVehicle(Hash, Location);
-            dynamic playerData = Utilities.GetPlayerData();
+            PlayerData playerData = Utilities.GetPlayerData();
             string displayName = playerData.DisplayName;
             Notify("~r~[BeachCallouts] ~y~Officer ~b~" + displayName + ",~y~ a " + cartype + " has washed ashore!");
+           
+            
             //Driver Data
-            dynamic data = new ExpandoObject();
-            data.alcoholLevel = 0.09;
+            PedData data = new PedData();
+            data.BloodAlcoholLevel = 0.09;
             Utilities.SetPedData(driver.NetworkId,data);
             
             //Passenger Data
-            dynamic data2 = new ExpandoObject();
-            data2.alcoholLevel = 0.01;
-            object Pistol = new {
+            PedData data2 = new PedData();
+            List<Item> items = data.Items;
+            data2.BloodAlcoholLevel = 0.01;
+            Item Pistol = new Item {
                 Name = "Pistol",
                 IsIllegal = true
             };
-            items2.Add(Pistol);
-            data2.items = items2;
+            items.Add(Pistol);
+            data2.Items = items;
             Utilities.SetPedData(passenger.NetworkId,data2);
             //Tasks
             driver.AlwaysKeepTask = true;

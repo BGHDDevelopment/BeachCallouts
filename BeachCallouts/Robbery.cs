@@ -4,11 +4,12 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using FivePD.API;
+using FivePD.API.Utils;
 
 namespace BeachCallouts
 {
     
-    [CalloutProperties("Robbery", "BGHDDevelopment", "0.0.3")]
+    [CalloutProperties("Robbery", "BGHDDevelopment", "0.0.4")]
     public class Robbery : Callout
     {
         private Ped vic, suspect;
@@ -40,10 +41,11 @@ namespace BeachCallouts
             base.OnStart(player);
             vic.AttachBlip();
             suspect.AttachBlip();
-            dynamic data1 = await Utilities.GetPedData(vic.NetworkId);
-            string firstname = data1.Firstname;
-            dynamic data2 = await Utilities.GetPedData(suspect.NetworkId);
-            string firstname2 = data2.Firstname;
+            
+            PedData data1 = await Utilities.GetPedData(vic.NetworkId);
+            string firstname = data1.FirstName;
+            PedData data2 = await Utilities.GetPedData(suspect.NetworkId);
+            string firstname2 = data2.FirstName;
             Random random = new Random();
             int x = random.Next(1, 100 + 1);
             if (x <= 40)
@@ -81,16 +83,20 @@ namespace BeachCallouts
         {
             InitBlip();
             UpdateData();
-            vic = await SpawnPed(GetRandomPed(), Location + 1);
-            suspect = await SpawnPed(GetRandomPed(), Location);
-            dynamic data = new ExpandoObject();
-            data.alcoholLevel = 0.02;
+            vic = await SpawnPed(RandomUtils.GetRandomPed(), Location + 1);
+            suspect = await SpawnPed(RandomUtils.GetRandomPed(), Location);
+            
+            
+            PedData data = new PedData();
+            data.BloodAlcoholLevel = 0.02;
             Utilities.SetPedData(vic.NetworkId,data);
+            
             suspect.AlwaysKeepTask = true;
             suspect.BlockPermanentEvents = true;
             vic.AlwaysKeepTask = true;
             vic.BlockPermanentEvents = true;
-            dynamic playerData = Utilities.GetPlayerData();
+            
+            PlayerData playerData = Utilities.GetPlayerData();
             string displayName = playerData.DisplayName;
             Notify("~r~[BeachCallouts] ~y~Officer ~b~" + displayName + ",~y~ the suspect is armed and dangerous!");
         }

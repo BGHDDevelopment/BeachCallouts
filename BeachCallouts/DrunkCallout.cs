@@ -5,16 +5,15 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using FivePD.API;
+using FivePD.API.Utils;
 
 namespace BeachCallouts
 {
-    [CalloutProperties("Drunk Person", "BGHDDevelopment", "0.0.3")]
+    [CalloutProperties("Drunk Person", "BGHDDevelopment", "0.0.4")]
     public class DrunkCallout : Callout
     {
         private Ped suspect, suspect2;
-        List<object> items = new List<object>();
-        List<object> items2 = new List<object>();
-        
+
         public DrunkCallout()
         {
             Random random = new Random();
@@ -46,11 +45,11 @@ namespace BeachCallouts
             suspect2.Task.WanderAround();
             suspect.AttachBlip();
             suspect2.AttachBlip();
-            dynamic data1 = await Utilities.GetPedData(suspect.NetworkId);
-            string firstname = data1.Firstname;
+            PedData data1 = await Utilities.GetPedData(suspect.NetworkId);
+            string firstname = data1.FirstName;
             DrawSubtitle("~r~[" + firstname + "] ~s~Can I have a beer?", 5000);
-            dynamic data2 = await Utilities.GetPedData(suspect2.NetworkId);
-            string firstname2 = data2.Firstname;
+            PedData data2 = await Utilities.GetPedData(suspect2.NetworkId);
+            string firstname2 = data2.FirstName;
             DrawSubtitle("~r~[" + firstname + "] ~s~SURE!", 5000);
             suspect.Task.FleeFrom(player);
         }
@@ -59,28 +58,32 @@ namespace BeachCallouts
         {
             InitBlip();
             UpdateData();
-            suspect = await SpawnPed(GetRandomPed(), Location);
-            suspect2 = await SpawnPed(GetRandomPed(), Location);
+            suspect = await SpawnPed(RandomUtils.GetRandomPed(), Location);
+            suspect2 = await SpawnPed(RandomUtils.GetRandomPed(), Location);
+            
+            
             //Suspect Data
-            dynamic data = new ExpandoObject();
-            data.alcoholLevel = 0.25;
-            object SixPack = new {
+            PedData data = new PedData();
+            List<Item> items = data.Items;
+            data.BloodAlcoholLevel = 0.25;
+            Item SixPack = new Item {
                 Name = "Six Pack",
                 IsIllegal = false
             };
             items.Add(SixPack);
-            data.items = items;
+            data.Items = items;
             Utilities.SetPedData(suspect.NetworkId,data);
 
             //Suspect2 Data
-            dynamic data2 = new ExpandoObject();
-            data.alcoholLevel = 0.18;
-            object Beer = new {
+            PedData data2 = new PedData();
+            List<Item> items2 = data.Items;
+            data2.BloodAlcoholLevel = 0.18;
+            Item Beer = new Item {
                 Name = "Beer",
                 IsIllegal = false
             };
             items.Add(Beer);
-            data.items2 = items2;
+            data2.Items = items2;
             Utilities.SetPedData(suspect2.NetworkId,data2);
             
             //Tasks
@@ -88,7 +91,7 @@ namespace BeachCallouts
             suspect.BlockPermanentEvents = true;
             suspect2.AlwaysKeepTask = true;
             suspect2.BlockPermanentEvents = true;
-            dynamic playerData = Utilities.GetPlayerData();
+            PlayerData playerData = Utilities.GetPlayerData();
             string displayName = playerData.DisplayName;
             Notify("~r~[BeachCallouts] ~y~Officer ~b~" + displayName + ",~y~ the suspects have been reported to be");
             Notify("~y~causing issues with other people and falling down!");

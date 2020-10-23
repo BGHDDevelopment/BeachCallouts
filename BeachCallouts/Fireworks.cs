@@ -5,17 +5,17 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using FivePD.API;
+using FivePD.API.Utils;
 
 namespace BeachCallouts
 {
     
-    [CalloutProperties("Fireworks", "BGHDDevelopment", "0.0.3")]
+    [CalloutProperties("Fireworks", "BGHDDevelopment", "0.0.4")]
     public class Fireworks : Callout
     {
 
         Ped suspect1, suspect2, suspect3, suspect4, suspect5, suspect6, suspect7, suspect8, suspect9, suspect10;
         private string[] badItemList = { "Beer Bottle", "Open Beer Can", "Wine Bottle", "Random Pills", "Needles", "Firework Launcher", "Fireworks", "Flares"};
-        List<object> items = new List<object>();
         public Fireworks()
         {
             Random random = new Random();
@@ -50,8 +50,8 @@ namespace BeachCallouts
             suspect8.AttachBlip();
             suspect9.AttachBlip();
             suspect10.AttachBlip();
-            dynamic data1 = await Utilities.GetPedData(suspect1.NetworkId);
-            string firstname = data1.Firstname;
+            PedData data1 = await Utilities.GetPedData(suspect1.NetworkId);
+            string firstname = data1.FirstName;
             API.Wait(30000);
             Random random = new Random();
             int x = random.Next(1, 100 + 1);
@@ -153,16 +153,16 @@ namespace BeachCallouts
         {
             InitBlip();
             UpdateData();
-            suspect1 = await SpawnPed(GetRandomPed(), Location + 1);
-            suspect2 = await SpawnPed(GetRandomPed(), Location + 2);
-            suspect3 = await SpawnPed(GetRandomPed(), Location + 3);
-            suspect4 = await SpawnPed(GetRandomPed(), Location - 1);
-            suspect5 = await SpawnPed(GetRandomPed(), Location - 5);
-            suspect6 = await SpawnPed(GetRandomPed(), Location - 6);
-            suspect7 = await SpawnPed(GetRandomPed(), Location + 7);
-            suspect8 = await SpawnPed(GetRandomPed(), Location + 4);
-            suspect9 = await SpawnPed(GetRandomPed(), Location - 2);
-            suspect10 = await SpawnPed(GetRandomPed(), Location - 5);
+            suspect1 = await SpawnPed(RandomUtils.GetRandomPed(), Location + 1);
+            suspect2 = await SpawnPed(RandomUtils.GetRandomPed(), Location + 2);
+            suspect3 = await SpawnPed(RandomUtils.GetRandomPed(), Location + 3);
+            suspect4 = await SpawnPed(RandomUtils.GetRandomPed(), Location - 1);
+            suspect5 = await SpawnPed(RandomUtils.GetRandomPed(), Location - 5);
+            suspect6 = await SpawnPed(RandomUtils.GetRandomPed(), Location - 6);
+            suspect7 = await SpawnPed(RandomUtils.GetRandomPed(), Location + 7);
+            suspect8 = await SpawnPed(RandomUtils.GetRandomPed(), Location + 4);
+            suspect9 = await SpawnPed(RandomUtils.GetRandomPed(), Location - 2);
+            suspect10 = await SpawnPed(RandomUtils.GetRandomPed(), Location - 5);
             suspect1.Weapons.Give(WeaponHash.Firework, 130, true, true);
             suspect2.Weapons.Give(WeaponHash.Firework, 130, true, true);
             suspect3.Weapons.Give(WeaponHash.Firework, 130, true, true);
@@ -193,18 +193,24 @@ namespace BeachCallouts
             suspect9.BlockPermanentEvents = true;
             suspect10.AlwaysKeepTask = true;
             suspect10.BlockPermanentEvents = true;
-            dynamic playerData = Utilities.GetPlayerData();
+            
+            
+            PlayerData playerData = Utilities.GetPlayerData();
             string displayName = playerData.DisplayName;
             Notify("~r~[BeachCallouts] ~y~Officer ~b~" + displayName + ",~y~ the suspects are firing fireworks into the air!");
-            dynamic data = new ExpandoObject();
+            
+            
+            
+            PedData data = new PedData();
             Random random2 = new Random();
             string name = badItemList[random2.Next(badItemList.Length)];
-            object badItem = new {
+            List<Item> items = data.Items;
+            Item badItem = new Item {
                 Name = name,
-                IsIllegal = true
+                IsIllegal = false
             };
             items.Add(badItem);
-            data.items = items;
+            data.Items = items;
             Utilities.SetPedData(suspect1.NetworkId,data);
             Utilities.SetPedData(suspect2.NetworkId,data);
             Utilities.SetPedData(suspect3.NetworkId,data);

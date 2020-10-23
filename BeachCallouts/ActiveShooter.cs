@@ -4,15 +4,15 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using FivePD.API;
+using FivePD.API.Utils;
 
 namespace BeachCallouts
 {
     
-    [CalloutProperties("Active Shooter", "BGHDDevelopment", "0.0.3")]
+    [CalloutProperties("Active Shooter", "BGHDDevelopment", "0.0.4")]
     public class ActiveShooter : Callout
     {
         private Ped suspect, vic1, vic2, vic3, vic4, vic5;
-        List<object> items = new List<object>();
         public ActiveShooter()
         {
             InitInfo(new Vector3(-1688.4f, -1059.91f, 13.0558f));
@@ -37,8 +37,8 @@ namespace BeachCallouts
             vic3.AttachBlip();
             vic4.AttachBlip();
             vic5.AttachBlip();
-            dynamic data1 = await Utilities.GetPedData(suspect.NetworkId);
-            string firstname = data1.Firstname;
+            PedData data1 = await Utilities.GetPedData(suspect.NetworkId);
+            string firstname = data1.FirstName;
             DrawSubtitle("~r~[" + firstname + "] ~s~I knew this was coming... DIE!", 5000);
         }
 
@@ -46,24 +46,25 @@ namespace BeachCallouts
         {
             InitBlip();
             UpdateData();
-            dynamic playerData = Utilities.GetPlayerData();
+            PlayerData playerData = Utilities.GetPlayerData();
             string displayName = playerData.DisplayName;
             Notify("~r~[BeachCallouts] ~y~Officer ~b~" + displayName + ",~y~ reports show multiple victims down!");
-            suspect = await SpawnPed(GetRandomPed(), Location);
-            vic1 = await SpawnPed(GetRandomPed(), Location + 1);
-            vic2 = await SpawnPed(GetRandomPed(), Location + 2);
-            vic3 = await SpawnPed(GetRandomPed(), Location + 4);
-            vic4 = await SpawnPed(GetRandomPed(), Location - 5);
-            vic5 = await SpawnPed(GetRandomPed(), Location - 1);
+            suspect = await SpawnPed(RandomUtils.GetRandomPed(), Location);
+            vic1 = await SpawnPed(RandomUtils.GetRandomPed(), Location + 1);
+            vic2 = await SpawnPed(RandomUtils.GetRandomPed(), Location + 2);
+            vic3 = await SpawnPed(RandomUtils.GetRandomPed(), Location + 4);
+            vic4 = await SpawnPed(RandomUtils.GetRandomPed(), Location - 5);
+            vic5 = await SpawnPed(RandomUtils.GetRandomPed(), Location - 1);
             //Suspect 1
-            dynamic data = new ExpandoObject();
-            data.alcoholLevel = 0.08;
-            object Rifle = new {
+            PedData data = new PedData();
+            List<Item> items = data.Items;
+            data.BloodAlcoholLevel = 0.08;
+            Item Rifle = new Item {
                 Name = "Rifle",
                 IsIllegal = true
             };
             items.Add(Rifle);
-            data.items = items;
+            data.Items = items;
             Utilities.SetPedData(suspect.NetworkId,data);
             suspect.AlwaysKeepTask = true;
             suspect.BlockPermanentEvents = true;
