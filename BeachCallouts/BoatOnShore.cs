@@ -10,7 +10,7 @@ using FivePD.API.Utils;
 namespace BeachCallouts
 {
     
-    [CalloutProperties("Boat Ashore", "BGHDDevelopment", "0.0.4")]
+    [CalloutProperties("Boat Ashore", "BGHDDevelopment", "0.0.5")]
     public class BoatOnShore : Callout
     {
         private Vehicle car;
@@ -83,7 +83,7 @@ namespace BeachCallouts
             
             //Passenger Data
             PedData data2 = new PedData();
-            List<Item> items = data.Items;
+            List<Item> items = new List<Item>();
             data2.BloodAlcoholLevel = 0.01;
             Item Pistol = new Item {
                 Name = "Pistol",

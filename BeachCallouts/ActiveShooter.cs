@@ -9,7 +9,7 @@ using FivePD.API.Utils;
 namespace BeachCallouts
 {
     
-    [CalloutProperties("Active Shooter", "BGHDDevelopment", "0.0.4")]
+    [CalloutProperties("Active Shooter", "BGHDDevelopment", "0.0.5")]
     public class ActiveShooter : Callout
     {
         private Ped suspect, vic1, vic2, vic3, vic4, vic5;
@@ -57,7 +57,7 @@ namespace BeachCallouts
             vic5 = await SpawnPed(RandomUtils.GetRandomPed(), Location - 1);
             //Suspect 1
             PedData data = new PedData();
-            List<Item> items = data.Items;
+            List<Item> items = new List<Item>();
             data.BloodAlcoholLevel = 0.08;
             Item Rifle = new Item {
                 Name = "Rifle",

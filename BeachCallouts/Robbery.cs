@@ -9,7 +9,7 @@ using FivePD.API.Utils;
 namespace BeachCallouts
 {
     
-    [CalloutProperties("Robbery", "BGHDDevelopment", "0.0.4")]
+    [CalloutProperties("Robbery", "BGHDDevelopment", "0.0.5")]
     public class Robbery : Callout
     {
         private Ped vic, suspect;

@@ -10,7 +10,7 @@ using FivePD.API.Utils;
 namespace BeachCallouts
 {
     
-    [CalloutProperties("Drug Deal", "BGHDDevelopment", "0.0.4")]
+    [CalloutProperties("Drug Deal", "BGHDDevelopment", "0.0.5")]
     public class Drugs : Callout
     {
         private Ped suspect, suspect2;
@@ -75,7 +75,7 @@ namespace BeachCallouts
             
             //Suspect Data
             PedData data = new PedData();
-            List<Item> items = data.Items;
+            List<Item> items = new List<Item>();
             data.BloodAlcoholLevel = 0.25;
             Item DrugBags = new Item {
                 Name = "Dug Bags",
@@ -87,7 +87,7 @@ namespace BeachCallouts
 
             //Suspect2 Data
             PedData data2 = new PedData();
-            List<Item> items2 = data.Items;
+            List<Item> items2 = new List<Item>();
             data.BloodAlcoholLevel = 0.18;
             Item Drugs = new Item {
                 Name = "Dugs",

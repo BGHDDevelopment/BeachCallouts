@@ -9,7 +9,7 @@ using FivePD.API.Utils;
 
 namespace BeachCallouts
 {
-    [CalloutProperties("Possible Fight", "BGHDDevelopment", "0.0.4")]
+    [CalloutProperties("Possible Fight", "BGHDDevelopment", "0.0.5")]
     public class Fight : Callout
     {
         Ped suspect, suspect2, suspect3, suspect4, suspect5, suspect6, suspect7, suspect8, suspect9, suspect10;
@@ -110,7 +110,7 @@ namespace BeachCallouts
             //Suspect 4
             PedData data4 = new PedData();
             data4.BloodAlcoholLevel = 0.00;
-            List<Item> items = data.Items;
+            List<Item> items = new List<Item>();
             Item Cash = new Item {
                 Name = "$500 Cash",
                 IsIllegal = false

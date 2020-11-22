@@ -10,7 +10,7 @@ using FivePD.API.Utils;
 namespace BeachCallouts
 {
     
-    [CalloutProperties("Fireworks", "BGHDDevelopment", "0.0.4")]
+    [CalloutProperties("Fireworks", "BGHDDevelopment", "0.0.5")]
     public class Fireworks : Callout
     {
 
@@ -204,7 +204,7 @@ namespace BeachCallouts
             PedData data = new PedData();
             Random random2 = new Random();
             string name = badItemList[random2.Next(badItemList.Length)];
-            List<Item> items = data.Items;
+            List<Item> items = new List<Item>();
             Item badItem = new Item {
                 Name = name,
                 IsIllegal = false
