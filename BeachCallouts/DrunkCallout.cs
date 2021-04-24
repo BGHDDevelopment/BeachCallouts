@@ -9,7 +9,7 @@ using FivePD.API.Utils;
 
 namespace BeachCallouts
 {
-    [CalloutProperties("Drunk Person", "BGHDDevelopment", "0.0.5")]
+    [CalloutProperties("Drunk Person", "BGHDDevelopment", "1.0.0")]
     public class DrunkCallout : Callout
     {
         private Ped suspect, suspect2;
@@ -39,25 +39,6 @@ namespace BeachCallouts
         public async override void OnStart(Ped player)
         {
             base.OnStart(player);
-            API.SetPedIsDrunk(suspect.GetHashCode(), true);
-            API.SetPedIsDrunk(suspect2.GetHashCode(), true);
-            suspect.Task.WanderAround();
-            suspect2.Task.WanderAround();
-            suspect.AttachBlip();
-            suspect2.AttachBlip();
-            PedData data1 = await Utilities.GetPedData(suspect.NetworkId);
-            string firstname = data1.FirstName;
-            DrawSubtitle("~r~[" + firstname + "] ~s~Can I have a beer?", 5000);
-            PedData data2 = await Utilities.GetPedData(suspect2.NetworkId);
-            string firstname2 = data2.FirstName;
-            DrawSubtitle("~r~[" + firstname + "] ~s~SURE!", 5000);
-            suspect.Task.FleeFrom(player);
-        }
-
-        public async override Task OnAccept()
-        {
-            InitBlip();
-            UpdateData();
             suspect = await SpawnPed(RandomUtils.GetRandomPed(), Location);
             suspect2 = await SpawnPed(RandomUtils.GetRandomPed(), Location);
             
@@ -95,6 +76,25 @@ namespace BeachCallouts
             string displayName = playerData.DisplayName;
             Notify("~r~[BeachCallouts] ~y~Officer ~b~" + displayName + ",~y~ the suspects have been reported to be");
             Notify("~y~causing issues with other people and falling down!");
+            API.SetPedIsDrunk(suspect.GetHashCode(), true);
+            API.SetPedIsDrunk(suspect2.GetHashCode(), true);
+            suspect.Task.WanderAround();
+            suspect2.Task.WanderAround();
+            suspect.AttachBlip();
+            suspect2.AttachBlip();
+            PedData data1 = await Utilities.GetPedData(suspect.NetworkId);
+            string firstname = data1.FirstName;
+            DrawSubtitle("~r~[" + firstname + "] ~s~Can I have a beer?", 5000);
+            PedData data5 = await Utilities.GetPedData(suspect2.NetworkId);
+            string firstname2 = data5.FirstName;
+            DrawSubtitle("~r~[" + firstname + "] ~s~SURE!", 5000);
+            suspect.Task.FleeFrom(player);
+        }
+
+        public async override Task OnAccept()
+        {
+            InitBlip();
+            UpdateData();
         }
         private void Notify(string message)
         {

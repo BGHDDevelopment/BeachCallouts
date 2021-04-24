@@ -10,7 +10,7 @@ using FivePD.API.Utils;
 namespace BeachCallouts
 {
     
-    [CalloutProperties("Boat Ashore", "BGHDDevelopment", "0.0.5")]
+    [CalloutProperties("Boat Ashore", "BGHDDevelopment", "1.0.0")]
     public class BoatOnShore : Callout
     {
         private Vehicle car;
@@ -41,30 +41,6 @@ namespace BeachCallouts
         public async override void OnStart(Ped player)
         {
             base.OnStart(player);
-            passenger.Weapons.Give(WeaponHash.Pistol, 20, true, true);
-            driver.Task.WanderAround();
-            car.AttachBlip();
-            driver.AttachBlip();
-            passenger.AttachBlip();
-            API.Wait(6000);
-            PedData data2 = await Utilities.GetPedData(passenger.NetworkId);
-            PedData data1 = await Utilities.GetPedData(driver.NetworkId);
-            string firstname2 = data2.FirstName;
-            string firstname = data1.FirstName;
-            DrawSubtitle("~r~[" + firstname2 + "] ~s~I am sorry I can't be blamed for this!", 5000);
-            passenger.Kill();
-            API.Wait(2000);
-            DrawSubtitle("~r~[" + firstname + "] ~s~NO WHY WOULD YOU DO THAT!", 5000);
-            API.Wait(5000);
-            DrawSubtitle("~r~[" + firstname + "] ~s~I need to get out of here....", 5000);
-            driver.SetIntoVehicle(car, VehicleSeat.Driver);
-            driver.Task.FleeFrom(player);
-        }
-
-        public async override Task OnAccept()
-        {
-            InitBlip();
-            UpdateData();
             driver = await SpawnPed(RandomUtils.GetRandomPed(), Location + 2);
             passenger = await SpawnPed(RandomUtils.GetRandomPed(), Location + 1);
             Random random = new Random();
@@ -97,6 +73,30 @@ namespace BeachCallouts
             driver.BlockPermanentEvents = true;
             passenger.AlwaysKeepTask = true;
             passenger.BlockPermanentEvents = true;
+            passenger.Weapons.Give(WeaponHash.Pistol, 20, true, true);
+            driver.Task.WanderAround();
+            car.AttachBlip();
+            driver.AttachBlip();
+            passenger.AttachBlip();
+            API.Wait(6000);
+            PedData data4 = await Utilities.GetPedData(passenger.NetworkId);
+            PedData data1 = await Utilities.GetPedData(driver.NetworkId);
+            string firstname2 = data4.FirstName;
+            string firstname = data1.FirstName;
+            DrawSubtitle("~r~[" + firstname2 + "] ~s~I am sorry I can't be blamed for this!", 5000);
+            passenger.Kill();
+            API.Wait(2000);
+            DrawSubtitle("~r~[" + firstname + "] ~s~NO WHY WOULD YOU DO THAT!", 5000);
+            API.Wait(5000);
+            DrawSubtitle("~r~[" + firstname + "] ~s~I need to get out of here....", 5000);
+            driver.SetIntoVehicle(car, VehicleSeat.Driver);
+            driver.Task.FleeFrom(player);
+        }
+
+        public async override Task OnAccept()
+        {
+            InitBlip();
+            UpdateData();
         }
         
         private void Notify(string message)

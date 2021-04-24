@@ -9,7 +9,7 @@ using FivePD.API.Utils;
 
 namespace BeachCallouts
 {
-    [CalloutProperties("Possible Fight", "BGHDDevelopment", "0.0.5")]
+    [CalloutProperties("Possible Fight", "BGHDDevelopment", "1.0.0")]
     public class Fight : Callout
     {
         Ped suspect, suspect2, suspect3, suspect4, suspect5, suspect6, suspect7, suspect8, suspect9, suspect10;
@@ -39,49 +39,7 @@ namespace BeachCallouts
         public async override void OnStart(Ped player)
         {
             base.OnStart(player);
-            suspect.AttachBlip();
-            suspect2.AttachBlip();
-            suspect3.AttachBlip();
-            suspect4.AttachBlip();
-            suspect5.AttachBlip();
-            suspect6.AttachBlip();
-            suspect7.AttachBlip();
-            suspect8.AttachBlip();
-            suspect9.AttachBlip();
-            suspect10.AttachBlip();
-            suspect.Task.FightAgainst(suspect2);
-            suspect2.Task.FightAgainst(suspect3);
-            suspect3.Task.FightAgainst(suspect4);
-            suspect4.Task.FightAgainst(suspect5);
-            suspect5.Task.FightAgainst(suspect6);
-            suspect6.Task.FightAgainst(suspect7);
-            suspect7.Task.FightAgainst(suspect8);
-            suspect8.Task.FightAgainst(suspect9);
-            suspect9.Task.FightAgainst(suspect10);
-            suspect10.Task.FightAgainst(suspect);
-            PedData data1 = await Utilities.GetPedData(suspect.NetworkId);
-            string firstname = data1.FirstName;
-            PedData data2 = await Utilities.GetPedData(suspect2.NetworkId);
-            string firstname2 = data2.FirstName;
-            PedData data3 = await Utilities.GetPedData(suspect3.NetworkId);
-            string firstname3 = data3.FirstName;
-            PedData data4 = await Utilities.GetPedData(suspect4.NetworkId);
-            string firstname4 = data4.FirstName;
-            API.Wait(6000);
-            DrawSubtitle("~r~[" + firstname + "] ~s~Why does my day at the beach always turn into this?", 5000);
-            API.Wait(6000);
-            DrawSubtitle("~r~[" + firstname2 + "] ~s~You are not my friend anymore!", 5000);
-            API.Wait(6000);
-            DrawSubtitle("~r~[" + firstname3 + "] ~s~YOUR MEAN!", 5000);
-            API.Wait(6000);
-            DrawSubtitle("~r~[" + firstname4 + "] ~s~DIE!", 5000);
-        }
-
-        public async override Task OnAccept()
-        {
-            InitBlip();
-            UpdateData();
-            suspect = await SpawnPed(RandomUtils.GetRandomPed(), Location + 1);
+                        suspect = await SpawnPed(RandomUtils.GetRandomPed(), Location + 1);
             suspect2 = await SpawnPed(RandomUtils.GetRandomPed(), Location - 1);
             suspect3 = await SpawnPed(RandomUtils.GetRandomPed(), Location + 2);
             suspect4 = await SpawnPed(RandomUtils.GetRandomPed(), Location - 2);
@@ -172,6 +130,44 @@ namespace BeachCallouts
             suspect9.BlockPermanentEvents = true;
             suspect10.AlwaysKeepTask = true;
             suspect10.BlockPermanentEvents = true;
+            suspect.AttachBlip();
+            suspect2.AttachBlip();
+            suspect3.AttachBlip();
+            suspect4.AttachBlip();
+            suspect5.AttachBlip();
+            suspect6.AttachBlip();
+            suspect7.AttachBlip();
+            suspect8.AttachBlip();
+            suspect9.AttachBlip();
+            suspect10.AttachBlip();
+            suspect.Task.FightAgainst(suspect2);
+            suspect2.Task.FightAgainst(suspect3);
+            suspect3.Task.FightAgainst(suspect4);
+            suspect4.Task.FightAgainst(suspect5);
+            suspect5.Task.FightAgainst(suspect6);
+            suspect6.Task.FightAgainst(suspect7);
+            suspect7.Task.FightAgainst(suspect8);
+            suspect8.Task.FightAgainst(suspect9);
+            suspect9.Task.FightAgainst(suspect10);
+            suspect10.Task.FightAgainst(suspect);
+            string firstname = data.FirstName;
+            string firstname2 = data2.FirstName;
+            string firstname3 = data3.FirstName;
+            string firstname4 = data4.FirstName;
+            API.Wait(6000);
+            DrawSubtitle("~r~[" + firstname + "] ~s~Why does my day at the beach always turn into this?", 5000);
+            API.Wait(6000);
+            DrawSubtitle("~r~[" + firstname2 + "] ~s~You are not my friend anymore!", 5000);
+            API.Wait(6000);
+            DrawSubtitle("~r~[" + firstname3 + "] ~s~YOUR MEAN!", 5000);
+            API.Wait(6000);
+            DrawSubtitle("~r~[" + firstname4 + "] ~s~DIE!", 5000);
+        }
+
+        public async override Task OnAccept()
+        {
+            InitBlip();
+            UpdateData();
         }
         private void DrawSubtitle(string message, int duration)
         {

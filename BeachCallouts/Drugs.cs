@@ -10,7 +10,7 @@ using FivePD.API.Utils;
 namespace BeachCallouts
 {
     
-    [CalloutProperties("Drug Deal", "BGHDDevelopment", "0.0.5")]
+    [CalloutProperties("Drug Deal", "BGHDDevelopment", "1.0.0")]
     public class Drugs : Callout
     {
         private Ped suspect, suspect2;
@@ -40,36 +40,6 @@ namespace BeachCallouts
         public async override void OnStart(Ped player)
         {
             base.OnStart(player);
-            suspect.AttachBlip();
-            suspect2.AttachBlip();
-            PedData data1 = await Utilities.GetPedData(suspect.NetworkId);
-            string firstname = data1.FirstName;
-            Random random = new Random();
-            int x = random.Next(1, 100 + 1);
-            if(x <= 40)
-            { 
-                DrawSubtitle("~r~[" + firstname + "] ~s~SHOOT COPS ARE HERE!", 5000);
-                suspect.Task.ReactAndFlee(player);
-                suspect2.Task.ShootAt(player);
-            }
-            else if(x > 40 && x <= 65)
-            {
-                suspect.Task.ReactAndFlee(player);
-                suspect2.Task.ReactAndFlee(player); 
-                DrawSubtitle("~r~[" + firstname + "] ~s~BAIL! RUN!", 5000);
-            }
-            else
-            {
-                DrawSubtitle("~r~[" + firstname + "] ~s~Shoot, I give up!", 5000);
-                suspect.Task.HandsUp(100000); 
-                suspect2.Task.ReactAndFlee(player);
-            }
-        }
-
-        public async override Task OnAccept()
-        {
-            InitBlip();
-            UpdateData();
             suspect = await SpawnPed(RandomUtils.GetRandomPed(), Location);
             suspect2 = await SpawnPed(RandomUtils.GetRandomPed(), Location);
             
@@ -106,6 +76,36 @@ namespace BeachCallouts
             string displayName = playerData.DisplayName;
             Notify("~r~[BeachCallouts] ~y~Officer ~b~" + displayName + ",~y~ the suspects have been reported to have");
             Notify("~y~been exchanging baggies!");
+            suspect.AttachBlip();
+            suspect2.AttachBlip();
+            PedData data1 = await Utilities.GetPedData(suspect.NetworkId);
+            string firstname = data1.FirstName;
+            Random random = new Random();
+            int x = random.Next(1, 100 + 1);
+            if(x <= 40)
+            { 
+                DrawSubtitle("~r~[" + firstname + "] ~s~SHOOT COPS ARE HERE!", 5000);
+                suspect.Task.ReactAndFlee(player);
+                suspect2.Task.ShootAt(player);
+            }
+            else if(x > 40 && x <= 65)
+            {
+                suspect.Task.ReactAndFlee(player);
+                suspect2.Task.ReactAndFlee(player); 
+                DrawSubtitle("~r~[" + firstname + "] ~s~BAIL! RUN!", 5000);
+            }
+            else
+            {
+                DrawSubtitle("~r~[" + firstname + "] ~s~Shoot, I give up!", 5000);
+                suspect.Task.HandsUp(100000); 
+                suspect2.Task.ReactAndFlee(player);
+            }
+        }
+
+        public async override Task OnAccept()
+        {
+            InitBlip();
+            UpdateData();
         }
         
         private void Notify(string message)

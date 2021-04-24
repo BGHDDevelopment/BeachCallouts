@@ -9,7 +9,7 @@ using FivePD.API.Utils;
 namespace BeachCallouts
 {
     
-    [CalloutProperties("Robbery", "BGHDDevelopment", "0.0.5")]
+    [CalloutProperties("Robbery", "BGHDDevelopment", "1.0.0")]
     public class Robbery : Callout
     {
         private Ped vic, suspect;
@@ -39,6 +39,22 @@ namespace BeachCallouts
         public async override void OnStart(Ped player)
         {
             base.OnStart(player);
+            vic = await SpawnPed(RandomUtils.GetRandomPed(), Location + 1);
+            suspect = await SpawnPed(RandomUtils.GetRandomPed(), Location);
+            
+            
+            PedData data = new PedData();
+            data.BloodAlcoholLevel = 0.02;
+            Utilities.SetPedData(vic.NetworkId,data);
+            
+            suspect.AlwaysKeepTask = true;
+            suspect.BlockPermanentEvents = true;
+            vic.AlwaysKeepTask = true;
+            vic.BlockPermanentEvents = true;
+            
+            PlayerData playerData = Utilities.GetPlayerData();
+            string displayName = playerData.DisplayName;
+            Notify("~r~[BeachCallouts] ~y~Officer ~b~" + displayName + ",~y~ the suspect is armed and dangerous!");
             vic.AttachBlip();
             suspect.AttachBlip();
             
@@ -83,22 +99,6 @@ namespace BeachCallouts
         {
             InitBlip();
             UpdateData();
-            vic = await SpawnPed(RandomUtils.GetRandomPed(), Location + 1);
-            suspect = await SpawnPed(RandomUtils.GetRandomPed(), Location);
-            
-            
-            PedData data = new PedData();
-            data.BloodAlcoholLevel = 0.02;
-            Utilities.SetPedData(vic.NetworkId,data);
-            
-            suspect.AlwaysKeepTask = true;
-            suspect.BlockPermanentEvents = true;
-            vic.AlwaysKeepTask = true;
-            vic.BlockPermanentEvents = true;
-            
-            PlayerData playerData = Utilities.GetPlayerData();
-            string displayName = playerData.DisplayName;
-            Notify("~r~[BeachCallouts] ~y~Officer ~b~" + displayName + ",~y~ the suspect is armed and dangerous!");
         }
         
         private void Notify(string message)

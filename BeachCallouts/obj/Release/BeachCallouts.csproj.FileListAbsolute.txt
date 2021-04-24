@@ -9,3 +9,14 @@ C:\Users\USER\RiderProjects\BeachCallouts\BeachCallouts\bin\Release\FivePD.net.d
 C:\Users\USER\RiderProjects\BeachCallouts\BeachCallouts\bin\Release\CitizenFX.Core.Client.dll
 C:\Users\USER\RiderProjects\BeachCallouts\BeachCallouts\bin\Release\CitizenFX.Core.Client.xml
 C:\Users\USER\RiderProjects\BeachCallouts\BeachCallouts\bin\Release\FivePD.net.xml
+C:\Users\steph\Desktop\Source\BeachCallouts\BeachCallouts\bin\Release\BeachCallouts.net.dll
+C:\Users\steph\Desktop\Source\BeachCallouts\BeachCallouts\bin\Release\BeachCallouts.net.pdb
+C:\Users\steph\Desktop\Source\BeachCallouts\BeachCallouts\bin\Release\CitizenFX.Core.Client.dll
+C:\Users\steph\Desktop\Source\BeachCallouts\BeachCallouts\bin\Release\FivePD.net.dll
+C:\Users\steph\Desktop\Source\BeachCallouts\BeachCallouts\bin\Release\CitizenFX.Core.Client.xml
+C:\Users\steph\Desktop\Source\BeachCallouts\BeachCallouts\bin\Release\FivePD.net.xml
+C:\Users\steph\Desktop\Source\BeachCallouts\BeachCallouts\obj\Release\BeachCallouts.csprojAssemblyReference.cache
+C:\Users\steph\Desktop\Source\BeachCallouts\BeachCallouts\obj\Release\BeachCallouts.csproj.CoreCompileInputs.cache
+C:\Users\steph\Desktop\Source\BeachCallouts\BeachCallouts\obj\Release\BeachCallouts.csproj.CopyComplete
+C:\Users\steph\Desktop\Source\BeachCallouts\BeachCallouts\obj\Release\BeachCallouts.net.dll
+C:\Users\steph\Desktop\Source\BeachCallouts\BeachCallouts\obj\Release\BeachCallouts.net.pdb

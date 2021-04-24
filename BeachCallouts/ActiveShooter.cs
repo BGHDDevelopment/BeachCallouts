@@ -9,7 +9,7 @@ using FivePD.API.Utils;
 namespace BeachCallouts
 {
     
-    [CalloutProperties("Active Shooter", "BGHDDevelopment", "0.0.5")]
+    [CalloutProperties("Active Shooter", "BGHDDevelopment", "1.0.0")]
     public class ActiveShooter : Callout
     {
         private Ped suspect, vic1, vic2, vic3, vic4, vic5;
@@ -24,28 +24,6 @@ namespace BeachCallouts
         public async override void OnStart(Ped player)
         {
             base.OnStart(player);
-            suspect.AttachBlip();
-            suspect.Weapons.Give(WeaponHash.MarksmanRifle, 1000, true, true);
-            suspect.Task.ShootAt(player);
-            vic1.Kill();
-            vic2.Kill();
-            vic3.Kill();
-            vic4.Kill();
-            vic5.Kill();
-            vic1.AttachBlip();
-            vic2.AttachBlip();
-            vic3.AttachBlip();
-            vic4.AttachBlip();
-            vic5.AttachBlip();
-            PedData data1 = await Utilities.GetPedData(suspect.NetworkId);
-            string firstname = data1.FirstName;
-            DrawSubtitle("~r~[" + firstname + "] ~s~I knew this was coming... DIE!", 5000);
-        }
-
-        public async override Task OnAccept()
-        {
-            InitBlip();
-            UpdateData();
             PlayerData playerData = Utilities.GetPlayerData();
             string displayName = playerData.DisplayName;
             Notify("~r~[BeachCallouts] ~y~Officer ~b~" + displayName + ",~y~ reports show multiple victims down!");
@@ -68,6 +46,28 @@ namespace BeachCallouts
             Utilities.SetPedData(suspect.NetworkId,data);
             suspect.AlwaysKeepTask = true;
             suspect.BlockPermanentEvents = true;
+            suspect.AttachBlip();
+            suspect.Weapons.Give(WeaponHash.MarksmanRifle, 1000, true, true);
+            suspect.Task.ShootAt(player);
+            vic1.Kill();
+            vic2.Kill();
+            vic3.Kill();
+            vic4.Kill();
+            vic5.Kill();
+            vic1.AttachBlip();
+            vic2.AttachBlip();
+            vic3.AttachBlip();
+            vic4.AttachBlip();
+            vic5.AttachBlip();
+            PedData data1 = await Utilities.GetPedData(suspect.NetworkId);
+            string firstname = data1.FirstName;
+            DrawSubtitle("~r~[" + firstname + "] ~s~I knew this was coming... DIE!", 5000);
+        }
+
+        public async override Task OnAccept()
+        {
+            InitBlip();
+            UpdateData();
         }
         
         private void Notify(string message)
